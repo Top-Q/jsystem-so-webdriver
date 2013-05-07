@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>webdriver-so</artifactId>
+	<dependencies>
+		<dependency>
+			<groupId>org.jsystemtest</groupId>
+			<artifactId>jsystemCore</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-server</artifactId>
+			<version>2.32.0</version>
+		</dependency>
+	</dependencies>
+
+	<!-- [1] Adding the build section after the dependencies... -->
+	<build>
+		<!-- [2] Adding the plugins section decleration. -->
+		<plugins>
+			<!-- [3] Adding the maven javadoc plugin and its goal. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9</version>
+				<executions>
+					<execution>
+						<id>attach-docs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<stylesheetfile>${basedir}/src/main/resources/stylesheet.css</stylesheetfile>
+					<show>private</show>
+					<nohelp>true</nohelp>
+				</configuration>
+			</plugin>
+			<!-- [4] Adding the maven source plugin and its goal. -->
+		</plugins>
+	</build>
+	<parent>
+		<groupId>org.jsystemtest.systemobjects</groupId>
+		<artifactId>webdriver-parent</artifactId>
+		<version>1.0.10</version>
+		<relativePath>../webdriver-parent</relativePath>
+	</parent>
+</project>
+
