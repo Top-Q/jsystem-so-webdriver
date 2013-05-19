@@ -57,6 +57,9 @@
 				<artifactId>jsystemCore</artifactId>
 				<version>6.0.01</version>
 			</dependency>
+			
+			
+			
 		</dependencies>
 	</dependencyManagement>
 
