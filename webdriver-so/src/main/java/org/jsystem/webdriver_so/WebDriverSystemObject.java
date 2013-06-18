@@ -411,6 +411,7 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 		WebDriver driver = null;
 		String chromeDriverPath;
 		ChromeOptions options = new ChromeOptions();
+		List<String> switches = new ArrayList<String>();
 
 		try {
 			chromeDriverPath = getChromeDriverExePath();
@@ -418,7 +419,6 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 			report.report("the Chrome Driver path is =" + chromeDriverPath);
 			System.setProperty("webdriver.chrome.driver", chromeDriverPath);
 
-			ArrayList<String> switches = new ArrayList<String>();
 			if (chromeProfile != null) {
 				report.report("open webDriver chrome with the profile(" + chromeProfile + ").");
 				switches.add("--user-data-dir=" + chromeProfile);
@@ -437,6 +437,16 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 			if (ignoreCertificateErrors == true) {
 				report.report("open webDriver chrome with the flag of ignoreCertificateErrors.");
 				switches.add("--ignore-certificate-errors");
+			}
+			
+			if(chromeFlags!=null){
+				String[] flags = chromeFlags.split(",");
+				for (String flag : flags) {
+					if(flag.startsWith("--")==false){
+						flag="--"+flag;
+					}
+					switches.add(flag);
+				}
 			}
 
 			if (switches.size() > 0) {
