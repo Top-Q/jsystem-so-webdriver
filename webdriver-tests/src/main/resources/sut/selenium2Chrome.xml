@@ -2,9 +2,10 @@
 
 	<webDriverSystemObject>
 		<class>org.jsystem.webdriver_so.WebDriverSystemObject</class>
-		<webDriver>chrome</webDriver>
+		<webDriver>CHROME_DRIVER</webDriver>
 		<domain>https://sourceforge.net/projects/jsystemtest/</domain>
 		<seleniumTimeOut>30000</seleniumTimeOut>
+		<chromeFlags>--disable-translate,--enable-password-generation</chromeFlags>
 	</webDriverSystemObject>
 
 </sut>
