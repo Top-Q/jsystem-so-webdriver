@@ -1,4 +1,4 @@
-package org.jsystemtest.webdriver_tests.tests;
+package org.jsystemtest.webdriver_tests.tests.jsystem;
 
 import jsystem.framework.TestProperties;
 
@@ -17,7 +17,7 @@ public class Selenium2Tests extends AbstractWebDriverTest{
 	public void googleCheese() throws Exception{
 		
 		 // And now use this to visit Google
-        driver.get("http://www.google.com");
+        driver.get("http://www.facebook.com");
         // Alternatively the same thing can be done like this
         // driver.navigate().to("http://www.google.com");
 

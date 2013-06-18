@@ -1,29 +1,24 @@
-package org.jsystemtest.webdriver_tests.tests;
+package org.jsystemtest.webdriver_tests.tests.non_jsystem;
 
 import java.util.List;
 
+import org.jsystemtest.webdriver_tests.tests.jsystem.AbstractWebDriverTest;
+import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
  * 
  * @author LielRan
  *
  */
-public class WebDriverExample {
-
+public class WebDriverSystemObjectExample extends AbstractWebDriverTest{
 	
-	private static WebDriver driver;
-	private static String q ="the the - slow emotion replay";
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		
-		
-		setup();
+	private String q ="the the - slow emotion replay";
+	
+	
+	@Test
+	public void youTubeTest(){
 		
 		driver.navigate().to("http://www.youtube.com/");
 		
@@ -45,30 +40,17 @@ public class WebDriverExample {
 			
 			resultsList.get(0).click();
 		}
-		
-		close();
-		
 	}
 
-	private static void setup() {
-		
-//		switch(browserType){
-//		case ie:
-//			break;
-//		case ff:
-//			break;
-//		case chrome:
-//			break;
-//		
-//		}
-		
-		driver= new FirefoxDriver();
-		
+
+	public String getQ() {
+		return q;
 	}
-	
-	private static void close() {
-		driver.quit();
-		
+
+
+	public void setQ(String q) {
+		this.q = q;
 	}
+
 
 }

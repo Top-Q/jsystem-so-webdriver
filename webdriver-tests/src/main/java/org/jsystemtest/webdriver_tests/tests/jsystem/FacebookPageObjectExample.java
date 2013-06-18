@@ -1,4 +1,4 @@
-package org.jsystemtest.webdriver_tests.tests;
+package org.jsystemtest.webdriver_tests.tests.jsystem;
 
 import junit.framework.SystemTestCase4;
 
