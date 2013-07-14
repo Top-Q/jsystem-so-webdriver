@@ -38,7 +38,7 @@ To use via Maven:
 ```
 
 
-SUT(xml)example(for chrome):
+System Under Test(A.K.A SUT file)example(for chrome):
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -52,6 +52,8 @@ SUT(xml)example(for chrome):
 	</webDriverSystemObject>
 </sut>
 ```
+
+Test Code Example (init the browser by the SUT file)
 
 ```java
  package org.jsystemtest.webdriver_tests.tests.jsystem;
