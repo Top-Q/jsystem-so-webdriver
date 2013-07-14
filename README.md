@@ -5,39 +5,112 @@ Maven Jsystem driver that help you init Webdriver for external xml file (SUT fil
 the main feature are: 
 
 <ul>
-  <li>1.plug and play</li>
-  <li>2.init the browsers in a simple way (no need to download additional files e.g. IeDriverServer.exe that required in case of IE).</li>
-  <li>3.close the browsers after the execution </li>
-  <li>3.close the browsers after the execution </li>
-  <li>3.close the browsers after the execution </li>
-  <li>3.close the browsers after the execution </li>
-  <li>3.close the browsers after the execution </li>
+  <li>plug and play</li>
+  <li>init the browsers in a simple way (no need to download additional files e.g. IeDriverServer.exe that required in case of IE).</li>
+  <li>Save the browser state between tests</li>
+  <li>close the browsers after the execution </li>
+  <li>built-in support in Page Object design pattern</li>
+  <li>automatic logging (on each action) without changing your code</li>
+  <li>automatic screenshot(on each action)without changing your code  /li>
+  <li>this module include "webdriver-tests" project, with code and test example ,see <a href='https://github.com/Top-Q/jsystem-so-webdriver/tree/master/webdriver-tests'>webdriver-tests</a></li>
 </ul>
 
 
+====================
+###Usage
 
 
-3.close the browsers after the execution 
-3.built-in support in Page Object design pattern 
-4.automatic logging (on each action) without changing your code
-5.automatic screenshot(on each action)without changing your code  
-this module include "webdriver-tests" project, with code and test example.
+To use via Maven:
+
+```xml
+<repositories>
+  <repository>
+		<id>topq</id>
+		<url>http://maven.top-q.co.il/content/groups/public</url>
+	</repository>
+</repositories>
+
+<dependency>
+	<groupId>org.jsystemtest.systemobjects</groupId>
+	<artifactId>webdriver-so</artifactId>
+	<version>1.0.10</version>
+</dependency>
+```
+
+
+SUT(xml)example(for chrome):
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<sut validators="">
+  <webDriverSystemObject>
+		<class>org.jsystem.webdriver_so.WebDriverSystemObject</class>
+		<webDriver>CHROME_DRIVER</webDriver>
+		<domain>http://www.top-q.co.il/</domain>
+		<seleniumTimeOut>30000</seleniumTimeOut>
+		<chromeFlags>--disable-translate,--enable-password-generation</chromeFlags>
+	</webDriverSystemObject>
+</sut>
+```
+
+```java
+ package org.jsystemtest.webdriver_tests.tests.jsystem;
+
+import java.util.List;
+
+import junit.framework.SystemTestCase4;
+
+import org.jsystem.webdriver_so.WebDriverSystemObject;
+import org.jsystem.webdriver_so.eventlistener.WebDriverScreenshotEventHandler;
+import org.junit.Before;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.events.WebDriverEventListener;
+
+public  class webDriverTest  extends SystemTestCase4 {
+
+  protected WebDriver driver;
+	protected WebDriverSystemObject seleniumSystemObject;
+	
+	@Before
+	public void setUp() throws Exception {
+		
+		seleniumSystemObject = (WebDriverSystemObject) system.getSystemObject("webDriverSystemObject");
+		driver=seleniumSystemObject.getDriver();
+	}
+	
+	@Test
+	public void googleCheese() throws Exception{
+		
+		// And now use this to visit Google
+		// Alternatively the same thing can be done like this
+        // driver.navigate().to("http://www.google.com");
+        driver.get("http://www.google.com");
+        
+        // Find the text input element by its name
+        WebElement element = driver.findElement(By.name("q"));
+       
+        // Enter something to search for
+        element.sendKeys("Cheese!");
+
+        // Now submit the form. WebDriver will find the form for us from the element
+        element.submit();
+        
+        // Google's search is rendered dynamically with JavaScript.
+        // Wait for the page to load, timeout after 10 seconds
+        (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver d) {
+                return d.getTitle().toLowerCase().startsWith("cheese!");
+            }
+        });
+
+        // Check the title of the page
+        System.out.println("Page title is: " + driver.getTitle());
+      		
+	}
+}
+
+```
 
 
 
-<table>
-    <tr>
-        <td>Foo</td>
-    </tr>
-</table>
 
-
-<ul>
-  <li>An item in a bulleted (unordered) list
-    <ul>
-      <li>A subitem, indented with 4 spaces</li>
-    </ul>
-  </li>
-  <li>Another item in a bulleted list</li>
-  <li>Here's another item</li>
-</ul>
