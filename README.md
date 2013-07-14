@@ -9,7 +9,7 @@ the main feature are:
   <li>init the browsers in a simple way (no need to download additional files e.g. IeDriverServer.exe that required in case of IE).</li>
   <li>Save the browser state between tests</li>
   <li>close the browsers after the execution </li>
-  <li>built-in support in Page Object design pattern</li>
+  <li>built-in support in <a href='https://code.google.com/p/selenium/wiki/PageObjects'>Page Object pattern</a></li>
   <li>automatic logging (on each action) without changing your code</li>
   <li>automatic screenshot(on each action)without changing your code  /li>
   <li>this module include "webdriver-tests" project, with code and test example ,see <a href='https://github.com/Top-Q/jsystem-so-webdriver/tree/master/webdriver-tests'>webdriver-tests</a></li>
