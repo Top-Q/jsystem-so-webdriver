@@ -4,10 +4,9 @@ import jsystem.framework.system.SystemObjectImpl;
 
 public class WebDriverConfigurationImpl extends SystemObjectImpl implements WebDriverConfiguration {
 
-	protected String executable, profile, extension;
-	protected String extraFlags;
-	protected boolean windowMaximize, ignoreCertificateErrors;
-	protected Boolean enableNativeEvents;
+	protected String executable = "", profile = "", extension = "",extraFlags = "", remoteAddress = "";
+	protected boolean windowMaximize=false , ignoreCertificateErrors = false;
+	protected Boolean enableNativeEvents=null;
 
 	@Override
 	public String getExecutable() {
@@ -83,6 +82,16 @@ public class WebDriverConfigurationImpl extends SystemObjectImpl implements WebD
 	@Override
 	public void setWindowMaximize(boolean windowMaximize) {
 		this.windowMaximize = windowMaximize;
+	}
+
+	@Override
+	public String getRemoteAddress() {
+		return this.remoteAddress;
+	}
+
+	@Override
+	public void setRemoteAddress(String remoteAddress) {
+		this.remoteAddress = remoteAddress;
 	}
 
 

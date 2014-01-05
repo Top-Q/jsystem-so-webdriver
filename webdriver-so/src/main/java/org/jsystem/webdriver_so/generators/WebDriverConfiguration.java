@@ -24,6 +24,9 @@ public interface WebDriverConfiguration {
 
 	public void setProfile(String profile);
 
+	
+	
+	public String getExtension();
 	/**
 	 * A browser can run extension (e.g. <i>.xpi</i> file in <i>Mozilla
 	 * Firefox</i>)
@@ -32,8 +35,10 @@ public interface WebDriverConfiguration {
 	 */
 	public void setExtension(String extension);
 
-	public String getExtension();
 
+	public String getRemoteAddress();
+	public void setRemoteAddress(String remoteAddress);
+	
 	public String getExtraFlags();
 
 	public void setExtraFlags(String extraFlags);
@@ -54,5 +59,7 @@ public interface WebDriverConfiguration {
 	public void setEnableNativeEvents(Boolean enableNativeEvent);
 
 	public Boolean isEnableNativeEvent();
+
+	
 
 }
