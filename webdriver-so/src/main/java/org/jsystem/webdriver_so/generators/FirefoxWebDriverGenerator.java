@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import jsystem.utils.StringUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -13,11 +15,13 @@ public class FirefoxWebDriverGenerator implements WebDriverGenerator {
 
 	@Override
 	public WebDriver getWebDriver(WebDriverConfiguration config) throws FileNotFoundException {
-		System.setProperty("webdriver.firefox.bin", config.getExecutable());
 		File pathToFirefoxBinary = new File(config.getExecutable());
-		FirefoxBinary ffBinary = new FirefoxBinary(pathToFirefoxBinary);
-
-		return new FirefoxDriver(ffBinary, getFirefoxConfigurationProfile(config));
+		if (pathToFirefoxBinary.canExecute()) { 
+			FirefoxBinary ffBinary = new FirefoxBinary(pathToFirefoxBinary);
+			System.setProperty("webdriver.firefox.bin", config.getExecutable());
+			return new FirefoxDriver(ffBinary, getFirefoxConfigurationProfile(config));
+		}
+		return new FirefoxDriver(getFirefoxConfigurationProfile(config));
 	}
 
 	/**
@@ -35,7 +39,7 @@ public class FirefoxWebDriverGenerator implements WebDriverGenerator {
 		File extention = null;
 		FirefoxProfile profile = null;
 
-		if (config.getProfile() != null) {
+		if (!StringUtils.isEmpty(config.getProfile())) {
 			File profileLib = new File(config.getProfile());
 			if (profileLib != null && !profileLib.exists() || profileLib == null) {
 				throw new FileNotFoundException("Failed to find firefox profile. is the path: does "
@@ -44,7 +48,7 @@ public class FirefoxWebDriverGenerator implements WebDriverGenerator {
 			profile = new FirefoxProfile(profileLib);
 		}
 
-		if (config.getExtension() != null) {
+		if (!StringUtils.isEmpty(config.getExtension())) {
 			if (null == profile) {
 				profile = new FirefoxProfile();
 			}
