@@ -1,6 +1,7 @@
 package org.jsystem.webdriver_so;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -9,6 +10,7 @@ import java.net.URLDecoder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import jsystem.framework.JSystemProperties;
@@ -23,6 +25,12 @@ import jsystem.utils.StringUtils;
 import org.jsystem.webdriver_so.CurrentPageKeeper.AbstractPageObjectResolver;
 import org.jsystem.webdriver_so.eventlistener.WebDriverReportEventHandler;
 import org.jsystem.webdriver_so.eventlistener.WebDriverScreenshotEventHandler;
+import org.jsystem.webdriver_so.generators.ChromeGenerator;
+import org.jsystem.webdriver_so.generators.FirefoxWebDriverGenerator;
+import org.jsystem.webdriver_so.generators.InternetExplorerGenerator;
+import org.jsystem.webdriver_so.generators.WebDriverConfiguration;
+import org.jsystem.webdriver_so.generators.WebDriverConfigurationImpl;
+import org.jsystem.webdriver_so.generators.WebDriverGenerator;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.android.AndroidDriver;
@@ -99,13 +107,32 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 
 	private boolean clearCookiesBeforeOpen = false;
 
+	protected Map<String /* driver type */ , WebDriverGenerator> generators;
+	public WebDriverConfigurationImpl configuration;
+
 	public void init() throws Exception {
 		super.init();
+		generators.put(WebDriverType.FIREFOX_DRIVER.getBorwserType(), new FirefoxWebDriverGenerator());
+		
+		InternetExplorerGenerator internetExplorerGenerator = new InternetExplorerGenerator();
+		generators.put("ie" , internetExplorerGenerator);
+		generators.put("internetexplorer" , internetExplorerGenerator);
+		generators.put(WebDriverType.INTERNET_EXPLORER_DRIVER.getBorwserType(), internetExplorerGenerator);
+		
+		generators.put(WebDriverType.CHROME_DRIVER.getBorwserType(), new ChromeGenerator());
+		
 		if (lazyInit == false) {
 			openBrowser();
 		}
 
 	}
+	
+	
+	protected WebDriverWrapper webDriverFactory(String type) throws FileNotFoundException {
+		WebDriverGenerator generator = generators.get(type);
+		return new WebDriverWrapper(generator.getWebDriver(configuration));
+	}
+	
 
 	/**
 	 * Open the browser:
@@ -213,7 +240,13 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 		WebDriverWrapper webDriverInstance = null;
 
 		if (getWebDriver() != null) {
-			webDriverInstance = webDriverFactory(getWebDriver());
+			try {
+				webDriverInstance = webDriverFactory(getWebDriver().name());
+			} catch (Exception e) {
+				webDriverInstance = webDriverFactory(getWebDriver());
+				report("SUT file is using deprecated methodology. please refer to " + this.getClass() + " documentation" , Reporter.WARNING );
+				//throw new RuntimeException(e);
+			}
 		}
 		else {
 
@@ -241,6 +274,8 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 		return registeredWebDriverEventListeners;
 	}
 
+
+	@Deprecated
 	protected WebDriverWrapper webDriverFactory(WebDriverType type) {
 
 		WebDriverWrapper driver = null;
@@ -354,7 +389,8 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 			}
 		}
 	}
-
+	
+	@Deprecated
 	protected WebDriver getInternetExplorerWebDriver() {
 		WebDriver webDriver = null;
 		try {
@@ -378,7 +414,8 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 
 	private FirefoxProfile ffProfile = null;
 	private FirefoxBinary ffBinary = null;
-
+	
+	@Deprecated
 	protected WebDriver getFirefoxWebDriver() {
 		WebDriver webDriver = null;
 		try {

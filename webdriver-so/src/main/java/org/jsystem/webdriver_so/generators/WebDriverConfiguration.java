@@ -12,11 +12,22 @@ public interface WebDriverConfiguration {
 	public void setExecutable(String executable);
 	
 	/**
-	 * Profile is the name of the profile in Mozilla Firefox & Chrome
+	 * Profile is the name of the profile in <i>Mozilla Firefox</i> & <i>Chrome</i>
+	 * 
 	 * @return
 	 */
 	public String getProfile();
 	public void setProfile(String profile);
+	
+	/**
+	 * A browser can run extension (e.g. <i>.xpi</i> file in <i>Mozilla Firefox</i>)
+	 * @param extension
+	 */
+	public void setExtension(String extension);
+	public String getExtension();
+
+	public String getExtraFlags();
+	public void setExtraFlags(String extraFlags);
 	
 	/**
 	 * show the browser in full screen.
@@ -24,5 +35,12 @@ public interface WebDriverConfiguration {
 	 */
 	public boolean isWindowMaximize();
 	public void setWindowMaximize(boolean windowMaximize);
+	
+	public void setIgnoreCertificateErrors(boolean ignoreCertificateErrors);
+	public boolean isIgnoreCertificateErrors();
+	
+	public void setEnableNativeEvents(Boolean enableNativeEvent);
+	public Boolean isEnableNativeEvent();
+	
 	
 }
