@@ -17,9 +17,7 @@ public class Selenium2Tests extends AbstractWebDriverTest{
 	public void googleCheese() throws Exception{
 		
 		 // And now use this to visit Google
-        driver.get("http://www.facebook.com");
-        // Alternatively the same thing can be done like this
-        // driver.navigate().to("http://www.google.com");
+         driver.navigate().to("http://www.google.com");
 
         // Find the text input element by its name
         WebElement element = driver.findElement(By.name("q"));
