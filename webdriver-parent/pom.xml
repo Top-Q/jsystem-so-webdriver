@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jsystemtest.systemobjects</groupId>
   <artifactId>webdriver-parent</artifactId>
-  <version>1.0.10</version>
+  <version>1.0.2-SNAPSHOT</version>
   <packaging>pom</packaging>
 	<properties>
 		<topq.repository.rootUrl>http://maven.top-q.co.il</topq.repository.rootUrl>

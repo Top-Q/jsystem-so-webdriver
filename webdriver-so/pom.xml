@@ -56,7 +56,7 @@
 	<parent>
 		<groupId>org.jsystemtest.systemobjects</groupId>
 		<artifactId>webdriver-parent</artifactId>
-		<version>1.0.10</version>
+		<version>1.0.2-SNAPSHOT</version>
 		<relativePath>../webdriver-parent</relativePath>
 	</parent>
 </project>
