@@ -30,6 +30,7 @@ import org.jsystem.webdriver_so.generators.ChromeWebDriverGenerator;
 import org.jsystem.webdriver_so.generators.FirefoxWebDriverGenerator;
 import org.jsystem.webdriver_so.generators.HtmlUnitWebDriverGenerator;
 import org.jsystem.webdriver_so.generators.InternetExplorerWebDriverGenerator;
+import org.jsystem.webdriver_so.generators.OperaWebDriverGenerator;
 import org.jsystem.webdriver_so.generators.SafariWebDriverGenerator;
 import org.jsystem.webdriver_so.generators.WebDriverConfiguration;
 import org.jsystem.webdriver_so.generators.WebDriverConfigurationImpl;
@@ -124,9 +125,9 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 		
 		generators.put(WebDriverType.CHROME_DRIVER.getBorwserType(), new ChromeWebDriverGenerator());		
 		generators.put(WebDriverType.ANDROID_DRIVER.getBorwserType(), new AndroidWebDriverGenerator());
-		generators.put(WebDriverType.HTML_UNIT_DRIVER.getBorwserType() , new HtmlUnitWebDriverGenerator());
-		generators.put(WebDriverType.SAFARI_DRIVER.getBorwserType() , new SafariWebDriverGenerator());
-		
+		generators.put(WebDriverType.HTML_UNIT_DRIVER.getBorwserType(), new HtmlUnitWebDriverGenerator());
+		generators.put(WebDriverType.SAFARI_DRIVER.getBorwserType(), new SafariWebDriverGenerator());
+		generators.put(WebDriverType.OPERA_DRIVER.getBorwserType(), new OperaWebDriverGenerator());
 		
 		if (lazyInit == false) {
 			openBrowser();
