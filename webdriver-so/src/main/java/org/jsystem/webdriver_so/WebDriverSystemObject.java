@@ -25,9 +25,12 @@ import jsystem.utils.StringUtils;
 import org.jsystem.webdriver_so.CurrentPageKeeper.AbstractPageObjectResolver;
 import org.jsystem.webdriver_so.eventlistener.WebDriverReportEventHandler;
 import org.jsystem.webdriver_so.eventlistener.WebDriverScreenshotEventHandler;
-import org.jsystem.webdriver_so.generators.ChromeGenerator;
+import org.jsystem.webdriver_so.generators.AndroidWebDriverGenerator;
+import org.jsystem.webdriver_so.generators.ChromeWebDriverGenerator;
 import org.jsystem.webdriver_so.generators.FirefoxWebDriverGenerator;
-import org.jsystem.webdriver_so.generators.InternetExplorerGenerator;
+import org.jsystem.webdriver_so.generators.HtmlUnitWebDriverGenerator;
+import org.jsystem.webdriver_so.generators.InternetExplorerWebDriverGenerator;
+import org.jsystem.webdriver_so.generators.SafariWebDriverGenerator;
 import org.jsystem.webdriver_so.generators.WebDriverConfiguration;
 import org.jsystem.webdriver_so.generators.WebDriverConfigurationImpl;
 import org.jsystem.webdriver_so.generators.WebDriverGenerator;
@@ -114,12 +117,16 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 		super.init();
 		generators.put(WebDriverType.FIREFOX_DRIVER.getBorwserType(), new FirefoxWebDriverGenerator());
 		
-		InternetExplorerGenerator internetExplorerGenerator = new InternetExplorerGenerator();
+		InternetExplorerWebDriverGenerator internetExplorerGenerator = new InternetExplorerWebDriverGenerator();
 		generators.put("ie" , internetExplorerGenerator);
 		generators.put("internetexplorer" , internetExplorerGenerator);
 		generators.put(WebDriverType.INTERNET_EXPLORER_DRIVER.getBorwserType(), internetExplorerGenerator);
 		
-		generators.put(WebDriverType.CHROME_DRIVER.getBorwserType(), new ChromeGenerator());
+		generators.put(WebDriverType.CHROME_DRIVER.getBorwserType(), new ChromeWebDriverGenerator());		
+		generators.put(WebDriverType.ANDROID_DRIVER.getBorwserType(), new AndroidWebDriverGenerator());
+		generators.put(WebDriverType.HTML_UNIT_DRIVER.getBorwserType() , new HtmlUnitWebDriverGenerator());
+		generators.put(WebDriverType.SAFARI_DRIVER.getBorwserType() , new SafariWebDriverGenerator());
+		
 		
 		if (lazyInit == false) {
 			openBrowser();
@@ -128,7 +135,7 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 	}
 	
 	
-	protected WebDriverWrapper webDriverFactory(String type) throws FileNotFoundException {
+	protected WebDriverWrapper webDriverFactory(String type) throws Exception {
 		WebDriverGenerator generator = generators.get(type);
 		return new WebDriverWrapper(generator.getWebDriver(configuration));
 	}
@@ -341,6 +348,7 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 		return driver;
 	}
 
+	@Deprecated
 	private WebDriver getSafariDriver() {
 		WebDriver driver = null;
 		try {
@@ -351,6 +359,7 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 		return driver;
 	}
 
+	@Deprecated
 	protected WebDriver getIphoneDriver() {
 		WebDriver webDriver = null;
 		try {
@@ -361,6 +370,7 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 		return webDriver;
 	}
 
+	@Deprecated
 	protected WebDriver getAndroidDriver() {
 		return new AndroidDriver();
 	}
@@ -370,6 +380,7 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 		return null;// Opeara is not supported
 	}
 
+	@Deprecated
 	protected WebDriver getHtmlUnitDriver() {
 		return new HtmlUnitDriver();
 	}
@@ -442,7 +453,7 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 		}
 		return webDriver;
 	}
-
+	@Deprecated
 	protected WebDriver getChromeDriver() {
 
 		WebDriver driver = null;

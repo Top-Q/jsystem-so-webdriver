@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-public class ChromeGenerator implements WebDriverGenerator {
+public class ChromeWebDriverGenerator implements WebDriverGenerator {
 
 	@Override
 	public WebDriver getWebDriver(WebDriverConfiguration config) throws FileNotFoundException {

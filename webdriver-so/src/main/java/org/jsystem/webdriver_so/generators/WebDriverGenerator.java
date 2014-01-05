@@ -14,8 +14,10 @@ public interface WebDriverGenerator {
 	 * @throws FileNotFoundException
 	 * when either the {@link WebDriverConfiguration#getExecutable()},
 	 *  {@link WebDriverConfiguration#getProfile()} or {@link WebDriverConfiguration#getExtension()} does not exist in the file system
+	 * @throws Exception 
+	 * on some drivers that does not provide specific exception
 	 * @throws IllegalArgumentException
 	 *  when the extension is not valid, or any other parameter is not valid
 	 */
-	public WebDriver getWebDriver(WebDriverConfiguration config) throws FileNotFoundException;
+	public WebDriver getWebDriver(WebDriverConfiguration config) throws FileNotFoundException, Exception;
 }

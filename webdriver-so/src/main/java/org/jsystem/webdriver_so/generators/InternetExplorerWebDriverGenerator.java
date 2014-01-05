@@ -7,7 +7,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-public class InternetExplorerGenerator implements WebDriverGenerator {
+public class InternetExplorerWebDriverGenerator implements WebDriverGenerator {
 
 	@Override
 	public WebDriver getWebDriver(WebDriverConfiguration config) throws FileNotFoundException {
