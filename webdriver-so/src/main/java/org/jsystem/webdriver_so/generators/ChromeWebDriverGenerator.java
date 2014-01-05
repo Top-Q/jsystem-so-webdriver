@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -22,11 +23,11 @@ public class ChromeWebDriverGenerator implements WebDriverGenerator {
 
 		System.setProperty("webdriver.chrome.driver", chromeDriverPath);
 
-		if (config.getProfile() != null) {
+		if (!StringUtils.isEmpty(config.getProfile())) {
 			switches.add("--user-data-dir=" + config.getProfile());
 		}
 
-		if (config.getExtension() != null) {
+		if (!StringUtils.isEmpty(config.getExtension())) {
 			switches.add("--load-extension=" + config.getExtension());
 		}
 

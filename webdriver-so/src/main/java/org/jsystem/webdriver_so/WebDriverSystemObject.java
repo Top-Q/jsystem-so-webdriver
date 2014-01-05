@@ -9,6 +9,7 @@ import java.net.URL;
 import java.net.URLDecoder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -116,6 +117,7 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 
 	public void init() throws Exception {
 		super.init();
+		generators = new HashMap<String, WebDriverGenerator>();
 		generators.put(WebDriverType.FIREFOX_DRIVER.getBorwserType(), new FirefoxWebDriverGenerator());
 		
 		InternetExplorerWebDriverGenerator internetExplorerGenerator = new InternetExplorerWebDriverGenerator();
@@ -138,6 +140,9 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 	
 	protected WebDriverWrapper webDriverFactory(String type) throws Exception {
 		WebDriverGenerator generator = generators.get(type);
+		if (generator == null){
+			throw new Exception("WebDriver type " + type + " is either unrecognized or not supported");
+		}
 		return new WebDriverWrapper(generator.getWebDriver(configuration));
 	}
 	
@@ -249,10 +254,10 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 
 		if (getWebDriver() != null) {
 			try {
-				webDriverInstance = webDriverFactory(getWebDriver().name());
+				webDriverInstance = webDriverFactory(getWebDriver().getBorwserType());
 			} catch (Exception e) {
-				webDriverInstance = webDriverFactory(getWebDriver());
 				report("SUT file is using deprecated methodology. please refer to " + this.getClass() + " documentation" , Reporter.WARNING );
+				webDriverInstance = webDriverFactory(getWebDriver());
 				//throw new RuntimeException(e);
 			}
 		}
