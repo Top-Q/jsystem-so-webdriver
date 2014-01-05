@@ -117,6 +117,9 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 
 	public void init() throws Exception {
 		super.init();
+		if (StringUtils.isEmpty(getDomain())) {
+			throw new Exception("domain parameter not set");
+		}
 		generators = new HashMap<String, WebDriverGenerator>();
 		generators.put(WebDriverType.FIREFOX_DRIVER.getBorwserType(), new FirefoxWebDriverGenerator());
 		
