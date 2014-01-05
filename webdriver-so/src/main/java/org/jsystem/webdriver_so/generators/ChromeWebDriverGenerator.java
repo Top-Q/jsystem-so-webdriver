@@ -42,10 +42,13 @@ public class ChromeWebDriverGenerator implements WebDriverGenerator {
 		if (config.getExtraFlags() != null) {
 			String[] flags = config.getExtraFlags().split(",");
 			for (String flag : flags) {
-				if (flag.startsWith("--") == false) {
+				flag = flag.trim();
+				if (flag.length()>0 && !flag.startsWith("--")) {
 					flag = "--" + flag;
 				}
-				switches.add(flag);
+				if (flag.length()>0){
+					switches.add(flag);
+				}
 			}
 		}
 
