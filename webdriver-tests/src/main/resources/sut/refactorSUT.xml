@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><sut validators="">
+    <webDriverSystemObject>
+        <class>org.jsystem.webdriver_so.WebDriverSystemObject</class>
+        <webDriver>FIREFOX_DRIVER</webDriver>
+        <configuration>
+            <class>org.jsystem.webdriver_so.generators.WebDriverConfigurationImpl</class>
+            <executable>"C:\Program Files (x86)\Mozilla Firefox\firefox.exe"</executable>
+            <windowMaximize>true</windowMaximize>
+        </configuration>
+        <domain>about:blank</domain>
+    </webDriverSystemObject>
+</sut>
