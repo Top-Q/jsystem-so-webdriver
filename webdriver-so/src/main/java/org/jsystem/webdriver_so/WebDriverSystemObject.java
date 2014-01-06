@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import jsystem.framework.FrameworkOptions;
 import jsystem.framework.JSystemProperties;
 import jsystem.framework.report.Reporter;
 import jsystem.framework.system.SystemObjectImpl;
@@ -91,6 +92,7 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 	protected String domain = "";
 	protected String seleniumTimeOut = "30000";
 	protected boolean ignoreCertificateErrors = false;
+	private String webDriverExecutableResourcePath = "";
 
 	/**
 	 * User and system web driver event handler classes Init from the SUT -
@@ -145,6 +147,14 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 		WebDriverGenerator generator = generators.get(type);
 		if (generator == null){
 			throw new Exception("WebDriver type " + type + " is either unrecognized or not supported");
+		}
+		if (!StringUtils.isEmpty(this.webDriverExecutableResourcePath)){
+			File destination = null;
+			if (!(destination = new File(configuration.getExecutable())).canExecute()){
+				destination =  File.createTempFile("executable", ".exe");
+				copyResource(webDriverExecutableResourcePath, destination);
+			} 
+			configuration.setExecutable(destination.getAbsolutePath());
 		}
 		return new WebDriverWrapper(generator.getWebDriver(configuration));
 	}
@@ -260,6 +270,8 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 				webDriverInstance = webDriverFactory(getWebDriver().getBorwserType());
 			} catch (Exception e) {
 				report("SUT file is using deprecated methodology. please refer to " + this.getClass() + " documentation" , Reporter.WARNING );
+				report("please update SUT file to one of the following available drivers: " + generators.keySet() , Reporter.WARNING );
+				
 				webDriverInstance = webDriverFactory(getWebDriver());
 				//throw new RuntimeException(e);
 			}
@@ -394,7 +406,7 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 		return new HtmlUnitDriver();
 	}
 
-	private void copyResource(String sourcePath, File destination) {
+	public void copyResource(String sourcePath, File destination) {
 		ClassLoader loader = LoadersManager.getInstance().getLoader();
 		InputStream is = loader.getResourceAsStream(sourcePath);
 		try {
@@ -869,5 +881,21 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 	 */
 	public void setClearCookiesBeforeOpen(boolean clearCookiesBeforeOpen) {
 		this.clearCookiesBeforeOpen = clearCookiesBeforeOpen;
+	}
+
+
+	/**
+	 * @return the webDriverExecutableResourcePath
+	 */
+	public String getWebDriverExecutableResourcePath() {
+		return webDriverExecutableResourcePath;
+	}
+
+
+	/**
+	 * @param webDriverExecutableResourcePath the webDriverExecutableResourcePath to set
+	 */
+	public void setWebDriverExecutableResourcePath(String webDriverExecutableResourcePath) {
+		this.webDriverExecutableResourcePath = webDriverExecutableResourcePath;
 	}
 }
