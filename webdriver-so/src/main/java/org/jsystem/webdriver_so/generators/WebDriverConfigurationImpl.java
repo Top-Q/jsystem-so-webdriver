@@ -4,8 +4,8 @@ import jsystem.framework.system.SystemObjectImpl;
 
 public class WebDriverConfigurationImpl extends SystemObjectImpl implements WebDriverConfiguration {
 
-	protected String executable = "", profile = "", extension = "",extraFlags = "", remoteAddress = "";
-	protected boolean windowMaximize=false , ignoreCertificateErrors = false;
+	protected String executable = "", profile = "", extension = "", extraFlags = "", remoteAddress = "";
+	protected boolean windowMaximize=false, ignoreCertificateErrors = false;
 	protected Boolean enableNativeEvents=null;
 
 	@Override
