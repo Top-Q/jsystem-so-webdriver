@@ -1,11 +1,11 @@
 jsystem-so-webdriver
 ====================
 
-Maven Jsystem driver that help you init Webdriver for external xml file (SUT file). 
+Maven JSystem driver that help you init WebDriver for external xml file (SUT file). 
 the main feature are: 
 
 <ul>
-  <li>plug and play</li>
+  <li>WebDriver executables can be downloaded from <a href ="http://code.google.com/p/selenium/downloads/list">here</a> and put either in filesystem (Configuration.executable setting in the SUT) or in the project resources (webDriverExecutableResourcePath in the SUT)</li>
   <li>Save the browser state between tests</li>
   <li>close the browser after the execution</li>
   <li>built-in support in <a href='https://code.google.com/p/selenium/wiki/PageObjects'>Page Object pattern</a></li>
@@ -33,6 +33,21 @@ To use via Maven:
 	<groupId>org.jsystemtest.systemobjects</groupId>
 	<artifactId>webdriver-so</artifactId>
 	<version>2.0.0-SNAPSHOT</version>
+</dependency>
+
+<!-- This would handle conflicts between JSystem and WebDriver dependencies -->
+<dependency>
+	<groupId>xml-apis</groupId>
+	<artifactId>xml-apis</artifactId>
+	<version>1.4.01</version>
+</dependency>
+
+<!-- Since WebDriver is no longer provider with the
+ system object one must specify it in the project POM file-->
+ <dependency>
+	<groupId>org.seleniumhq.selenium</groupId>
+	<artifactId>selenium-server</artifactId>
+	<version>2.39.0</version>
 </dependency>
 ```
 
