@@ -6,9 +6,8 @@ the main feature are:
 
 <ul>
   <li>plug and play</li>
-  <li>init the browsers in a simple way (no need to download additional files e.g. IeDriverServer.exe that required in case of IE).</li>
   <li>Save the browser state between tests</li>
-  <li>close the browser after the execution </li>
+  <li>close the browser after the execution</li>
   <li>built-in support in <a href='https://code.google.com/p/selenium/wiki/PageObjects'>Page Object pattern</a></li>
   <li>automatic logging (on each action) without changing your code</li>
   <li>automatic screenshot(on each action)without changing your code  </li>
@@ -33,7 +32,7 @@ To use via Maven:
 <dependency>
 	<groupId>org.jsystemtest.systemobjects</groupId>
 	<artifactId>webdriver-so</artifactId>
-	<version>1.0.10</version>
+	<version>2.0.0</version>
 </dependency>
 ```
 
@@ -44,11 +43,16 @@ System Under Test(A.K.A SUT file)example(for chrome):
 <?xml version="1.0" encoding="UTF-8"?>
 <sut validators="">
   <webDriverSystemObject>
-		<class>org.jsystem.webdriver_so.WebDriverSystemObject</class>
-		<webDriver>CHROME_DRIVER</webDriver>
-		<domain>http://www.top-q.co.il/</domain>
+        <class>org.jsystem.webdriver_so.WebDriverSystemObject</class>
+        <webDriver>CHROME_DRIVER</webDriver>
+        <configuration>
+            <class>org.jsystem.webdriver_so.generators.WebDriverConfigurationImpl</class>
+            <windowMaximize>true</windowMaximize>
+			<extraFlags>--disable-translate,--enable-password-generation</extraFlags>
+        </configuration>
+        <webDriverExecutableResourcePath>drivers/32bit/chromedriver.exe</webDriverExecutableResourcePath>
+        <domain>about:blank</domain>
 		<seleniumTimeOut>30000</seleniumTimeOut>
-		<chromeFlags>--disable-translate,--enable-password-generation</chromeFlags>
 	</webDriverSystemObject>
 </sut>
 ```
