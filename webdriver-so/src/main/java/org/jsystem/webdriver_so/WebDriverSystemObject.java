@@ -114,14 +114,23 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 
 	private boolean clearCookiesBeforeOpen = false;
 
+	/**
+	 * AbstractFactory Design pattern of web drivers.<br>
+	 * To add another generator in your own {@link WebDriverSystemObject} implementation
+	 * the <b>constructor</b> should look like this:<br>
+	 * <code>
+	 * class MyClass extends {@link WebDriverSystemObject} {<br>
+	 * 		public MyClass(){<br>
+	 * 			super();<br>
+	 * 			generators.put("myWebDriverName", new MyGenerator());<br>
+	 * 		}<br>
+	 * }</code>
+	 */
 	protected Map<String /* driver type */ , WebDriverGenerator> generators;
 	public WebDriverConfigurationImpl configuration;
-
-	public void init() throws Exception {
-		super.init();
-		if (StringUtils.isEmpty(getDomain())) {
-			throw new Exception("domain parameter not set");
-		}
+	
+	
+	public WebDriverSystemObject() {
 		generators = new HashMap<String, WebDriverGenerator>();
 		generators.put(WebDriverType.FIREFOX_DRIVER.getBorwserType(), new FirefoxWebDriverGenerator());
 		
@@ -135,6 +144,13 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 		generators.put(WebDriverType.HTML_UNIT_DRIVER.getBorwserType(), new HtmlUnitWebDriverGenerator());
 		generators.put(WebDriverType.SAFARI_DRIVER.getBorwserType(), new SafariWebDriverGenerator());
 		generators.put(WebDriverType.OPERA_DRIVER.getBorwserType(), new OperaWebDriverGenerator());
+	}
+
+	public void init() throws Exception {
+		super.init();
+		if (StringUtils.isEmpty(getDomain())) {
+			throw new Exception("domain parameter not set");
+		}
 		
 		if (lazyInit == false) {
 			openBrowser();
