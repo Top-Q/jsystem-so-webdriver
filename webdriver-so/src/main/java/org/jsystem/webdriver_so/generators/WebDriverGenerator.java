@@ -2,9 +2,7 @@ package org.jsystem.webdriver_so.generators;
 
 import java.io.FileNotFoundException;
 
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.android.AndroidDriver;
 
 public interface WebDriverGenerator {
 	/**

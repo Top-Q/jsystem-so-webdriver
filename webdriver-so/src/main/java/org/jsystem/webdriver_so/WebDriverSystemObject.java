@@ -1,20 +1,41 @@
 package org.jsystem.webdriver_so;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import jsystem.framework.FrameworkOptions;
+import org.jsystem.webdriver_so.CurrentPageKeeper.AbstractPageObjectResolver;
+import org.jsystem.webdriver_so.eventlistener.WebDriverReportEventHandler;
+import org.jsystem.webdriver_so.eventlistener.WebDriverScreenshotEventHandler;
+import org.jsystem.webdriver_so.generators.ChromeWebDriverGenerator;
+import org.jsystem.webdriver_so.generators.FirefoxWebDriverGenerator;
+import org.jsystem.webdriver_so.generators.HtmlUnitWebDriverGenerator;
+import org.jsystem.webdriver_so.generators.InternetExplorerWebDriverGenerator;
+import org.jsystem.webdriver_so.generators.OperaWebDriverGenerator;
+import org.jsystem.webdriver_so.generators.SafariWebDriverGenerator;
+import org.jsystem.webdriver_so.generators.WebDriverConfigurationImpl;
+import org.jsystem.webdriver_so.generators.WebDriverGenerator;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxBinary;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.support.events.WebDriverEventListener;
+
 import jsystem.framework.JSystemProperties;
 import jsystem.framework.report.Reporter;
 import jsystem.framework.system.SystemObjectImpl;
@@ -23,35 +44,6 @@ import jsystem.runner.loader.ExtendsTestCaseClassLoader;
 import jsystem.runner.loader.LoadersManager;
 import jsystem.utils.FileUtils;
 import jsystem.utils.StringUtils;
-
-import org.jsystem.webdriver_so.CurrentPageKeeper.AbstractPageObjectResolver;
-import org.jsystem.webdriver_so.eventlistener.WebDriverReportEventHandler;
-import org.jsystem.webdriver_so.eventlistener.WebDriverScreenshotEventHandler;
-import org.jsystem.webdriver_so.generators.AndroidWebDriverGenerator;
-import org.jsystem.webdriver_so.generators.ChromeWebDriverGenerator;
-import org.jsystem.webdriver_so.generators.FirefoxWebDriverGenerator;
-import org.jsystem.webdriver_so.generators.HtmlUnitWebDriverGenerator;
-import org.jsystem.webdriver_so.generators.InternetExplorerWebDriverGenerator;
-import org.jsystem.webdriver_so.generators.OperaWebDriverGenerator;
-import org.jsystem.webdriver_so.generators.SafariWebDriverGenerator;
-import org.jsystem.webdriver_so.generators.WebDriverConfiguration;
-import org.jsystem.webdriver_so.generators.WebDriverConfigurationImpl;
-import org.jsystem.webdriver_so.generators.WebDriverGenerator;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.android.AndroidDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.iphone.IPhoneDriver;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.safari.SafariDriver;
-import org.openqa.selenium.support.events.WebDriverEventListener;
 
 //import com.tools.CurrentPageKeeper;
 
@@ -140,7 +132,6 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 		generators.put(WebDriverType.INTERNET_EXPLORER_DRIVER.getBorwserType(), internetExplorerGenerator);
 		
 		generators.put(WebDriverType.CHROME_DRIVER.getBorwserType(), new ChromeWebDriverGenerator());		
-		generators.put(WebDriverType.ANDROID_DRIVER.getBorwserType(), new AndroidWebDriverGenerator());
 		generators.put(WebDriverType.HTML_UNIT_DRIVER.getBorwserType(), new HtmlUnitWebDriverGenerator());
 		generators.put(WebDriverType.SAFARI_DRIVER.getBorwserType(), new SafariWebDriverGenerator());
 		generators.put(WebDriverType.OPERA_DRIVER.getBorwserType(), new OperaWebDriverGenerator());
@@ -353,14 +344,6 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 				webDriver = getOperaDriver();
 			break;
 
-			case ANDROID_DRIVER:
-				webDriver = getAndroidDriver();
-			break;
-
-			case IPHONE_DRIVER:
-				webDriver = getIphoneDriver();
-			break;
-
 			case SAFARI_DRIVER:
 				webDriver = getSafariDriver();
 			break;
@@ -396,21 +379,7 @@ public class WebDriverSystemObject extends SystemObjectImpl implements HasWebDri
 		return driver;
 	}
 
-	@Deprecated
-	protected WebDriver getIphoneDriver() {
-		WebDriver webDriver = null;
-		try {
-			webDriver = new IPhoneDriver();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return webDriver;
-	}
 
-	@Deprecated
-	protected WebDriver getAndroidDriver() {
-		return new AndroidDriver();
-	}
 
 	protected WebDriver getOperaDriver() {
 		// return new OperaDriver();
